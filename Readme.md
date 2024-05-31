@@ -6,7 +6,7 @@
 
 1. Клонируйте репозиторий на ваш локальный компьютер:
     ```sh
-    git clone https://github.com/yourusername/xml-parser-app.git
+    git clone https://github.com/Artlashmanov/TransferParseApp.git
     cd xml-parser-app
     ```
 

@@ -1,13 +1,11 @@
+// src/generateXML.js
 const fs = require('fs');
 const xml2js = require('xml2js');
 const path = require('path');
-const transformValue = require('./transformValue');
-const parsePrimaryObjectID = require('./parsePrimaryObjectID');
-const transformDefineOfSetupYield = require('./transformDefineOfSetupYield');
-const transformDefineOfTestYield = require('./transformDefineOfTestYield');
-const transformItemInventoryGroup = require('./transformItemInventoryGroup');
-const transformItemPlanningGroup = require('./transformItemPlanningGroup');
-const transformTaskId = require('./transformTaskId');
+const { parsePrimaryObjectID } = require('./parsePrimaryObjectID');
+const { findTag, parsePartTag } = require('./tags/part');
+const { parseItemPlanningGroupTag } = require('./tags/transformItemPlanningGroup');
+const { parseItemInventoryGroupTag } = require('./tags/transformItemInventoryGroup');
 
 const defaultNumber = "00000";
 
@@ -15,41 +13,7 @@ const getValueOrDefault = (data, defaultValue = defaultNumber) => {
     return data !== undefined ? data : defaultValue;
 };
 
-const findTag = (obj, tagName) => {
-    if (!obj || typeof obj !== 'object') return null;
-    if (obj[tagName]) return obj[tagName][0];
-    for (let key in obj) {
-        if (obj[key] && typeof obj[key] === 'object') {
-            const result = findTag(obj[key], tagName);
-            if (result) return result;
-        }
-    }
-    return null;
-};
-
-const transformAttributes = (source, target, attributeMapping) => {
-    if (source && source.$) {
-        for (const [sourceAttr, targetAttr] of Object.entries(attributeMapping)) {
-            let value = source.$[sourceAttr];
-            value = transformValue(value); // Преобразование значения
-            target.$[targetAttr] = getValueOrDefault(value);
-        }
-    }
-};
-
-const replaceDefaultValues = (obj) => {
-    for (const key in obj) {
-        if (typeof obj[key] === 'object') {
-            replaceDefaultValues(obj[key]);
-        } else {
-            if (obj[key] === "00000") {
-                obj[key] = defaultNumber;
-            }
-        }
-    }
-};
-
-const generateXML = (data, templatePath, outputPath, mapping) => {
+const generateXML = (data, templatePath, outputPath) => {
     fs.readFile(templatePath, (err, templateData) => {
         if (err) {
             console.error('Failed to read template file:', err);
@@ -63,90 +27,31 @@ const generateXML = (data, templatePath, outputPath, mapping) => {
             }
 
             try {
-                replaceDefaultValues(template);
-
                 const root = data.root || data.COLLECTION || {};
-                const part = findTag(root, 'Part');
+                const partData = parsePartTag(root);
+                const itemPlanningGroupData = parseItemPlanningGroupTag(root); // Передаем root
+                const itemInventoryGroupData = parseItemInventoryGroupTag(root); // Передаем root
                 const primaryObjectID = findTag(root, 'PrimaryObjectID');
                 const transactionNumber = findTag(root, 'TransactionNumber');
 
-                console.log('Parsed PrimaryObjectID:', primaryObjectID);
-                console.log('Parsed Part:', part);
-                console.log('Parsed TransactionNumber:', transactionNumber);
-
-                const defaultUnitValue = findTag(part, 'DefaultUnit') || defaultNumber;
-                const tipValue = findTag(part, 'TIP') || defaultNumber;
-                const nameValue = findTag(part, 'Name') || defaultNumber;
-                const stateValue = findTag(part, 'State') || defaultNumber;
-                const numberValue = findTag(part, 'Number') || defaultNumber;
-
-                console.log('DefaultUnit Value:', defaultUnitValue);
-                console.log('TIP Value:', tipValue);
-                console.log('Name Value:', nameValue);
-                console.log('State Value:', stateValue);
-                console.log('Number Value:', numberValue);
-
-                const parsedPrimaryObjectID = parsePrimaryObjectID(primaryObjectID);
-
                 const itemTemplate = template.root.item[0];
 
-                // Применение таблицы соответствия к атрибутам Part
-                if (mapping.attributes.Part && part) {
-                    transformAttributes(part, itemTemplate, mapping.attributes.Part);
-                }
+                itemTemplate.$.name = partData.name;
+                itemTemplate.$.description = partData.description;
 
-                // Заполнение атрибутов тега um
-                itemTemplate.um[0].$ = {
-                    id: getValueOrDefault(transformValue(defaultUnitValue, mapping)),
-                    key: getValueOrDefault(transformValue(defaultUnitValue, mapping)),
-                    objectName: "UnitMeasure"
-                };
+                itemTemplate.um[0].$ = partData.um;
+                itemTemplate.itemtype[0].$ = partData.itemtype;
+                itemTemplate.status[0].$ = partData.status;
 
-                // Заполнение атрибутов тега itemtype
-                itemTemplate.itemtype[0].$ = {
-                    id: getValueOrDefault(transformValue(tipValue, mapping)),
-                    key: getValueOrDefault(transformValue(tipValue, mapping)),
-                    objectName: "ItemType"
-                };
+                itemTemplate.itemplanninggroup[0].$ = itemPlanningGroupData;
+                itemTemplate.iteminventorygroup[0].$ = itemInventoryGroupData;
 
-                // Заполнение атрибута name тега item из Number
-                itemTemplate.$.name = getValueOrDefault(transformValue(numberValue));
-
-                // Заполнение атрибута description тега item из Name
-                itemTemplate.$.description = getValueOrDefault(transformValue(nameValue));
-
-                // Заполнение атрибутов тега status
-                itemTemplate.status[0].$ = {
-                    id: getValueOrDefault(transformValue(stateValue, mapping)),
-                    key: getValueOrDefault(transformValue(stateValue, mapping)),
-                    objectName: "Status"
-                };
-
-                // Заполнение атрибутов для тегов itemplanninggroup и iteminventorygroup
-                itemTemplate.itemplanninggroup[0].$ = {
-                    id: transformItemPlanningGroup(tipValue),
-                    key: transformItemPlanningGroup(tipValue),
-                    objectName: "ItemPlanningGroup"
-                };
-                itemTemplate.iteminventorygroup[0].$ = {
-                    id: transformItemInventoryGroup(tipValue),
-                    key: transformItemInventoryGroup(tipValue),
-                    objectName: "ItemInventoryGroup"
-                };
-
-                // Заполнение полей на основе PrimaryObjectID
-                itemTemplate.$.defineOfSetupYield = parsedPrimaryObjectID.defineOfSetupYield;
-                itemTemplate.$.defineOfTestYield = parsedPrimaryObjectID.defineOfTestYield;
-                itemTemplate.$.key = parsedPrimaryObjectID.key;
-                
-                // Заполнение поля taskId из тега TransactionNumber
                 const taskId = getValueOrDefault(transactionNumber);
                 template.root.$.taskId = taskId;
 
                 const builder = new xml2js.Builder();
                 const xml = builder.buildObject(template);
 
-                // Создание имени файла на основе taskId
                 const paddedTaskId = taskId.padStart(10, '0');
                 const outputFileName = `${paddedTaskId}_Item.xml`;
                 const outputFilePath = path.join(path.dirname(outputPath), outputFileName);

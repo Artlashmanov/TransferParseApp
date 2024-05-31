@@ -1,6 +1,6 @@
 const amqp = require('amqplib/callback_api');
 
-const sendRawXMLFile = (xmlFilePath) => {
+const sendProcessedXMLFile = (xmlFilePath) => {
     amqp.connect('amq://localhost', (err, conn) => {
         if (err) {
             throw err;
@@ -9,7 +9,7 @@ const sendRawXMLFile = (xmlFilePath) => {
             if (err) {
                 throw err;
             }
-            const queue = 'raw_xml_files';
+            const queue = 'processed_xml_files';
             const fs = require('fs');
             const xmlData = fs.readFileSync(xmlFilePath, 'utf8');
 
@@ -24,4 +24,4 @@ const sendRawXMLFile = (xmlFilePath) => {
     });
 };
 
-module.exports = sendRawXMLFile;
+module.exports = sendProcessedXMLFile;

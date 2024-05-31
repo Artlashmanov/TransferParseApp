@@ -4,6 +4,9 @@ const chokidar = require('chokidar');
 const parseXML = require('./parseXML');
 const generateXML = require('./generateXML');
 const generateJSON = require('./generateJSON');
+const startConsumer = require('./connector/consumer');
+
+
 
 // Определение текущей директории исполняемого файла
 const baseDir = process.cwd();
@@ -121,5 +124,6 @@ watcherJSON
         console.error(`Watcher error: ${error}`);
     });
 
+startConsumer();
 console.log(`Watching for file changes in inputXML and inputJSON directories...`);
 console.log(`Application version: ${appVersion}`);

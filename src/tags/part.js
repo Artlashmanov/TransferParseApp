@@ -2,9 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// Загрузим таблицу соответствия
-const mappingFilePath = path.join(__dirname, '../../mappingTable.json');
-const mappingTable = JSON.parse(fs.readFileSync(mappingFilePath, 'utf8'));
+// Загрузим таблицу соответствия для `um`
+const mappingTable = JSON.parse(fs.readFileSync(path.join(__dirname, '../../mappingTable.json'), 'utf8'));
 
 const findTag = (obj, tagName) => {
     if (!obj || typeof obj !== 'object') return null;
@@ -41,8 +40,8 @@ const parsePartTag = (xmlData) => {
         name: number,
         description: name,
         um: {
-            id: defaultUnit,
-            key: defaultUnit,
+            id: transformValue(defaultUnit),
+            key: transformValue(defaultUnit),
             objectName: 'UnitMeasure'
         },
         itemtype: {

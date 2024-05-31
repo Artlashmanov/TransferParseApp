@@ -1,0 +1,22 @@
+{
+  "mapping": {
+    "Part": "item"
+  },
+  "attributes": {
+    "Part": {
+      "Name": "description",
+      "FullName": "description",
+      "Number": "name",
+      "key": "key"
+    },
+    "DefaultUnit": {
+      "value": "id"
+    },
+    "TIP": {
+      "value": "id"
+    },
+    "State": {
+      "value": "id"
+    }
+  }
+}

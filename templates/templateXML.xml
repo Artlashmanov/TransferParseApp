@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<root action="CREATE" objectName="Item" taskId="000000">
+    <item code="87" name="00000" description="00000" defineOfSetupYield="COUNT" defineOfTestYield="COUNT" isSaleItem="false" obsoleted="false" forForecast="false">
+        <um id="00000" key="00000" objectName="UnitMeasure"/>
+        <itemplanninggroup id="00000" key="00000" objectName="ItemPlanningGroup"/>
+        <iteminventorygroup id="00000" key="00000" objectName="ItemInventoryGroup"/>
+        <itemtype id="00000" key="00000" objectName="ItemType"/>
+        <status id="00000" key="00000" objectName="Status"/>
+    </item>
+</root>

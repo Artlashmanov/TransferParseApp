@@ -3,7 +3,6 @@ const parseXML = require('../parseXML');
 const generateXML = require('../generateXML');
 const fs = require('fs');
 const path = require('path');
-const chokidar = require('chokidar');
 
 const sendProcessedXMLFile = require('./sendProcessedXMLFile'); // Импорт функции отправки обработанных файлов
 
@@ -13,7 +12,7 @@ const processFile = async (filePath) => {
         const data = await parseXML(xmlData);
 
         const outputFileName = `${path.basename(filePath, '.xml')}_processed.xml`;
-        const outputFilePath = path.join(__dirname, '../output', outputFileName);
+        const outputFilePath = path.join(__dirname, '../../output', outputFileName); // Убедитесь, что путь ведет к корню проекта
         await generateXML(data, outputFilePath);
 
         // Отправка готового файла в очередь processed_xml_files
@@ -41,7 +40,14 @@ const startConsumer = () => {
             ch.consume(queue, async (msg) => {
                 if (msg !== null) {
                     const xmlData = msg.content.toString();
-                    const tempFilePath = path.join(__dirname, '../inputXML', 'temp.xml');
+                    const tempDir = path.join(__dirname, '../../inputXML'); // Убедитесь, что путь ведет к корню проекта
+                    const tempFilePath = path.join(tempDir, 'temp.xml');
+
+                    // Проверка существования директории inputXML и создание, если она не существует
+                    if (!fs.existsSync(tempDir)) {
+                        fs.mkdirSync(tempDir, { recursive: true });
+                    }
+
                     fs.writeFileSync(tempFilePath, xmlData);
 
                     await processFile(tempFilePath);
@@ -50,18 +56,6 @@ const startConsumer = () => {
                 }
             }, { noAck: false });
         });
-    });
-
-    // Наблюдение за папкой inputXML
-    const watcher = chokidar.watch(path.join(__dirname, '../inputXML'), {
-        persistent: true,
-        ignoreInitial: true,
-        awaitWriteFinish: true
-    });
-
-    watcher.on('add', filePath => {
-        console.log(`File ${filePath} has been added`);
-        processFile(filePath);
     });
 };
 

@@ -1,7 +1,7 @@
 const amqp = require('amqplib/callback_api');
 
 const sendRawXMLFile = (xmlFilePath) => {
-    amqp.connect('amq://localhost', (err, conn) => {
+    amqp.connect('amqp://localhost', (err, conn) => { // Исправлено здесь
         if (err) {
             throw err;
         }

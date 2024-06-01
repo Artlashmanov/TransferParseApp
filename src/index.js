@@ -5,8 +5,8 @@ const parseXML = require('./parseXML');
 const generateXML = require('./generateXML');
 const generateJSON = require('./generateJSON');
 const startConsumer = require('./connector/consumer');
-
-
+const sendRawXMLFile = require('./connector/producer');  // Импорт функции sendRawXMLFile
+const sendProcessedXMLFile = require('./connector/sendProcessedXMLFile'); // Импорт функции sendProcessedXMLFile
 
 // Определение текущей директории исполняемого файла
 const baseDir = process.cwd();
@@ -119,6 +119,33 @@ watcherJSON
     })
     .on('unlink', filePath => {
         console.log(`JSON file ${filePath} has been removed.`);
+    })
+    .on('error', error => {
+        console.error(`Watcher error: ${error}`);
+    });
+
+const watcherOutput = chokidar.watch(outputDir, {
+    persistent: true,
+    ignoreInitial: false,
+    usePolling: true,
+    interval: 100,
+    awaitWriteFinish: {
+        stabilityThreshold: 2000,
+        pollInterval: 100
+    }
+});
+
+watcherOutput
+    .on('add', filePath => {
+        console.log(`Processed file ${filePath} has been added.`);
+        sendProcessedXMLFile(filePath);  // Отправка обработанного файла в очередь processed_xml_files
+    })
+    .on('change', filePath => {
+        console.log(`Processed file ${filePath} has been changed.`);
+        sendProcessedXMLFile(filePath);  // Отправка обработанного файла в очередь processed_xml_files
+    })
+    .on('unlink', filePath => {
+        console.log(`Processed file ${filePath} has been removed.`);
     })
     .on('error', error => {
         console.error(`Watcher error: ${error}`);

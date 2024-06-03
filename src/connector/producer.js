@@ -1,7 +1,10 @@
+// src/connector/producer.js
+
 const amqp = require('amqplib/callback_api');
+const fs = require('fs');
 
 const sendRawXMLFile = (xmlFilePath) => {
-    amqp.connect('amq://localhost', (err, conn) => {
+    amqp.connect('amqp://localhost', (err, conn) => {
         if (err) {
             throw err;
         }
@@ -10,7 +13,6 @@ const sendRawXMLFile = (xmlFilePath) => {
                 throw err;
             }
             const queue = 'raw_xml_files';
-            const fs = require('fs');
             const xmlData = fs.readFileSync(xmlFilePath, 'utf8');
 
             ch.assertQueue(queue, { durable: true });

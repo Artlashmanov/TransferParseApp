@@ -2,13 +2,16 @@
 
 const chokidar = require('chokidar');
 const { processFileAsXML, processFileAsJSONWithTemplate } = require('./xmlHandler');
+const { readExcelFile, writeExcelFile } = require('./excelHandler'); // Добавим обработчики Excel
 const { logInfo, logError } = require('../utils/logger');
 const { ensureDirectoryExists } = require('../utils/directoryHelper');
 const sendProcessedXMLFile = require('../connector/sendProcessedXMLFile');
+const path = require('path');
 
-const watchDirectories = (inputXMLDir, inputJSONDir, outputDir) => {
+const watchDirectories = (inputXMLDir, inputJSONDir, inputXLSXDir, outputDir, templateExcelPath) => {
     ensureDirectoryExists(inputXMLDir);
     ensureDirectoryExists(inputJSONDir);
+    ensureDirectoryExists(inputXLSXDir); // Убедимся, что директория существует
     ensureDirectoryExists(outputDir);
 
     const watcherXML = chokidar.watch(inputXMLDir, {
@@ -23,6 +26,17 @@ const watchDirectories = (inputXMLDir, inputJSONDir, outputDir) => {
     });
 
     const watcherJSON = chokidar.watch(inputJSONDir, {
+        persistent: true,
+        ignoreInitial: false,
+        usePolling: true,
+        interval: 100,
+        awaitWriteFinish: {
+            stabilityThreshold: 2000,
+            pollInterval: 100
+        }
+    });
+
+    const watcherXLSX = chokidar.watch(inputXLSXDir, {
         persistent: true,
         ignoreInitial: false,
         usePolling: true,
@@ -57,6 +71,14 @@ const watchDirectories = (inputXMLDir, inputJSONDir, outputDir) => {
         .on('change', filePath => processFileAsJSONWithTemplate(filePath))
         .on('error', error => logError(`Watcher error: ${error}`));
 
+    watcherXLSX
+        .on('add', filePath => {
+            logInfo(`XLSX file ${filePath} has been added.`);
+            processFileAsXLSX(filePath, outputDir, templateExcelPath); // Обработка Excel файла
+        })
+        .on('change', filePath => processFileAsXLSX(filePath, outputDir, templateExcelPath))
+        .on('error', error => logError(`Watcher error: ${error}`));
+
     watcherOutput
         .on('add', filePath => {
             logInfo(`Output file ${filePath} has been added.`);
@@ -67,6 +89,13 @@ const watchDirectories = (inputXMLDir, inputJSONDir, outputDir) => {
             sendProcessedXMLFile(filePath);
         })
         .on('error', error => logError(`Watcher error: ${error}`));
+};
+
+const processFileAsXLSX = (filePath, outputDir, templateExcelPath) => {
+    const data = readExcelFile(filePath);
+    const outputFilePath = path.join(outputDir, path.basename(filePath));
+    writeExcelFile(data, templateExcelPath, outputFilePath);
+    logInfo(`Processed and saved: ${outputFilePath}`);
 };
 
 module.exports = { watchDirectories };

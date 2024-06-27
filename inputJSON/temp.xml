@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<COLLECTION><Release NAME="Release" TYPE="Unknown" STATUS="0">
+<Transaction>
+    <TransactionNumber>329189</TransactionNumber>
+    <ReleaseNumber>59992</ReleaseNumber>
+    <PrimaryObjectID>OR:wt.part.WTPart:195421465:228873630-1318412216795-1132501759-12-0-35-10@serverwnc.utz.local</PrimaryObjectID>
+    <CreatedBy>aablagodarev</CreatedBy>
+    <CreatedDate>11.01.2024 10:25:48 YEKT</CreatedDate>
+    <Locale>ru</Locale>
+    <Destination>0000000001</Destination>
+</Transaction>
+</Release>
+<DeletedECN NAME="DeletedECN" TYPE="Unknown" STATUS="0">
+</DeletedECN>
+<AddedECN NAME="AddedECN" TYPE="Unknown" STATUS="0">
+</AddedECN>
+<ChangedECN NAME="ChangedECN" TYPE="Unknown" STATUS="0">
+</ChangedECN>
+<UnchangedECN NAME="UnchangedECN" TYPE="Unknown" STATUS="0">
+</UnchangedECN>
+<DeletedParts NAME="DeletedParts" TYPE="Unknown" STATUS="0">
+</DeletedParts>
+<AddedParts NAME="AddedParts" TYPE="Unknown" STATUS="0">
+</AddedParts>
+<ChangedParts NAME="ChangedParts" TYPE="Unknown" STATUS="0">
+<Part>
+    <ObjectID>OR:wt.part.WTPart:195421465:228873630-1318412216795-1132501759-12-0-35-10@serverwnc.utz.local</ObjectID>
+    <Class>com.ptc.windchill.esi.Part</Class>
+    <LastChangedBy>ZaycevaNV</LastChangedBy>
+    <Number>Т9698-5542/1</Number>
+    <StartEffectivity></StartEffectivity>
+    <EndEffectivity></EndEffectivity>
+    <StartSerialNumberEffectivity></StartSerialNumberEffectivity>
+    <EndSerialNumberEffectivity></EndSerialNumberEffectivity>
+    <StartLotNumberEffectivity></StartLotNumberEffectivity>
+    <EndLotNumberEffectivity></EndLotNumberEffectivity>
+    <SerialNumberEffectivityCxtPartNumber></SerialNumberEffectivityCxtPartNumber>
+    <LotNumberEffectivityCxtPartNumber></LotNumberEffectivityCxtPartNumber>
+    <DefaultUnit>ea</DefaultUnit>
+    <Name>Крышка</Name>
+    <FullName>Крышка</FullName>
+    <MasterID>195421405</MasterID>
+    <TIP>Деталь</TIP>
+    <MATERIAL_GRADE></MATERIAL_GRADE>
+    <materialType></materialType>
+    <PartTypeName></PartTypeName>
+    <GROUPPRODUCT></GROUPPRODUCT>
+    <PRODUCT></PRODUCT>
+    <PartType>component</PartType>
+    <Source>make</Source>
+    <View>Конструкторское</View>
+    <State>OBSOLETE</State>
+    <IsPhantom>false</IsPhantom>
+    <Version>0</Version>
+    <Iteration>1</Iteration>
+    <PreviousVersion>3</PreviousVersion>
+    <NumberOperation></NumberOperation>
+    <Ссылка>http://serverwnc.utz.local/Windchill/app/#ptc1/tcomp/infoPage?oid=OR%3Awt.part.WTPart%3A195421465&amp;u8=1</Ссылка>
+    <FolderPath>/Default/Аннулированные части/2024</FolderPath>
+    <Контекст>Аннулированные чертежи</Контекст>
+    <TargetID>0000000001</TargetID>
+</Part>
+</ChangedParts>
+<UnchangedParts NAME="UnchangedParts" TYPE="Unknown" STATUS="0">
+</UnchangedParts>
+<DeletedAlternateLinks NAME="DeletedAlternateLinks" TYPE="Unknown" STATUS="0">
+</DeletedAlternateLinks>
+<AddedAlternateLinks NAME="AddedAlternateLinks" TYPE="Unknown" STATUS="0">
+</AddedAlternateLinks>
+<DeletedDocuments NAME="DeletedDocuments" TYPE="Unknown" STATUS="0">
+</DeletedDocuments>
+<AddedDocuments NAME="AddedDocuments" TYPE="Unknown" STATUS="0">
+</AddedDocuments>
+<ChangedDocuments NAME="ChangedDocuments" TYPE="Unknown" STATUS="0">
+</ChangedDocuments>
+<UnchangedDocuments NAME="UnchangedDocuments" TYPE="Unknown" STATUS="0">
+</UnchangedDocuments>
+<DeletedDocumentLinks NAME="DeletedDocumentLinks" TYPE="Unknown" STATUS="0">
+</DeletedDocumentLinks>
+<AddedDocumentLinks NAME="AddedDocumentLinks" TYPE="Unknown" STATUS="0">
+</AddedDocumentLinks>
+<ChangedDocumentLinks NAME="ChangedDocumentLinks" TYPE="Unknown" STATUS="0">
+</ChangedDocumentLinks>
+<UnchangedDocumentLinks NAME="UnchangedDocumentLinks" TYPE="Unknown" STATUS="0">
+</UnchangedDocumentLinks>
+<DeletedBOMs NAME="DeletedBOMs" TYPE="Unknown" STATUS="0">
+</DeletedBOMs>
+<AddedBOMs NAME="AddedBOMs" TYPE="Unknown" STATUS="0">
+</AddedBOMs>
+<ChangedBOMs NAME="ChangedBOMs" TYPE="Unknown" STATUS="0">
+</ChangedBOMs>
+<UnchangedBOMs NAME="UnchangedBOMs" TYPE="Unknown" STATUS="0">
+</UnchangedBOMs>
+<DeletedBOMComponents NAME="DeletedBOMComponents" TYPE="Unknown" STATUS="0">
+</DeletedBOMComponents>
+<AddedBOMComponents NAME="AddedBOMComponents" TYPE="Unknown" STATUS="0">
+</AddedBOMComponents>
+<ChangedBOMComponents NAME="ChangedBOMComponents" TYPE="Unknown" STATUS="0">
+</ChangedBOMComponents>
+<UnchangedBOMComponents NAME="UnchangedBOMComponents" TYPE="Unknown" STATUS="0">
+</UnchangedBOMComponents>
+<DeletedSubstitutes NAME="DeletedSubstitutes" TYPE="Unknown" STATUS="0">
+</DeletedSubstitutes>
+<AddedSubstitutes NAME="AddedSubstitutes" TYPE="Unknown" STATUS="0">
+</AddedSubstitutes>
+<DeletedReferenceDesignators NAME="DeletedReferenceDesignators" TYPE="Unknown" STATUS="0">
+</DeletedReferenceDesignators>
+<AddedReferenceDesignators NAME="AddedReferenceDesignators" TYPE="Unknown" STATUS="0">
+</AddedReferenceDesignators>
+<DeletedProcessMaterials NAME="DeletedProcessMaterials" TYPE="Unknown" STATUS="0">
+</DeletedProcessMaterials>
+<AddedProcessMaterials NAME="AddedProcessMaterials" TYPE="Unknown" STATUS="0">
+</AddedProcessMaterials>
+<ChangedProcessMaterials NAME="ChangedProcessMaterials" TYPE="Unknown" STATUS="0">
+</ChangedProcessMaterials>
+<UnchangedProcessMaterials NAME="UnchangedProcessMaterials" TYPE="Unknown" STATUS="0">
+</UnchangedProcessMaterials>
+<DeletedToolings NAME="DeletedToolings" TYPE="Unknown" STATUS="0">
+</DeletedToolings>
+<AddedToolings NAME="AddedToolings" TYPE="Unknown" STATUS="0">
+</AddedToolings>
+<ChangedToolings NAME="ChangedToolings" TYPE="Unknown" STATUS="0">
+</ChangedToolings>
+<UnchangedToolings NAME="UnchangedToolings" TYPE="Unknown" STATUS="0">
+</UnchangedToolings>
+<DeletedProcessPlans NAME="DeletedProcessPlans" TYPE="Unknown" STATUS="0">
+</DeletedProcessPlans>
+<AddedProcessPlans NAME="AddedProcessPlans" TYPE="Unknown" STATUS="0">
+</AddedProcessPlans>
+<ChangedProcessPlans NAME="ChangedProcessPlans" TYPE="Unknown" STATUS="0">
+</ChangedProcessPlans>
+<UnchangedProcessPlans NAME="UnchangedProcessPlans" TYPE="Unknown" STATUS="0">
+</UnchangedProcessPlans>
+<DeletedOperations NAME="DeletedOperations" TYPE="Unknown" STATUS="0">
+</DeletedOperations>
+<AddedOperations NAME="AddedOperations" TYPE="Unknown" STATUS="0">
+</AddedOperations>
+<ChangedOperations NAME="ChangedOperations" TYPE="Unknown" STATUS="0">
+</ChangedOperations>
+<UnchangedOperations NAME="UnchangedOperations" TYPE="Unknown" STATUS="0">
+</UnchangedOperations>
+<DeletedProcessPlanPartLinks NAME="DeletedProcessPlanPartLinks" TYPE="Unknown" STATUS="0">
+</DeletedProcessPlanPartLinks>
+<AddedProcessPlanPartLinks NAME="AddedProcessPlanPartLinks" TYPE="Unknown" STATUS="0">
+</AddedProcessPlanPartLinks>
+<ChangedProcessPlanPartLinks NAME="ChangedProcessPlanPartLinks" TYPE="Unknown" STATUS="0">
+</ChangedProcessPlanPartLinks>
+<UnchangedProcessPlanPartLinks NAME="UnchangedProcessPlanPartLinks" TYPE="Unknown" STATUS="0">
+</UnchangedProcessPlanPartLinks>
+<DeletedSequences NAME="DeletedSequences" TYPE="Unknown" STATUS="0">
+</DeletedSequences>
+<AddedSequences NAME="AddedSequences" TYPE="Unknown" STATUS="0">
+</AddedSequences>
+<ChangedSequences NAME="ChangedSequences" TYPE="Unknown" STATUS="0">
+</ChangedSequences>
+<UnchangedSequences NAME="UnchangedSequences" TYPE="Unknown" STATUS="0">
+</UnchangedSequences>
+<DeletedOprConsumableResourceLinks NAME="DeletedOprConsumableResourceLinks" TYPE="Unknown" STATUS="0">
+</DeletedOprConsumableResourceLinks>
+<AddedOprConsumableResourceLinks NAME="AddedOprConsumableResourceLinks" TYPE="Unknown" STATUS="0">
+</AddedOprConsumableResourceLinks>
+<ChangedOprConsumableResourceLinks NAME="ChangedOprConsumableResourceLinks" TYPE="Unknown" STATUS="0">
+</ChangedOprConsumableResourceLinks>
+<UnchangedOprConsumableResourceLinks NAME="UnchangedOprConsumableResourceLinks" TYPE="Unknown" STATUS="0">
+</UnchangedOprConsumableResourceLinks>
+<DeletedOprWorkCenterLinks NAME="DeletedOprWorkCenterLinks" TYPE="Unknown" STATUS="0">
+</DeletedOprWorkCenterLinks>
+<AddedOprWorkCenterLinks NAME="AddedOprWorkCenterLinks" TYPE="Unknown" STATUS="0">
+</AddedOprWorkCenterLinks>
+<ChangedOprWorkCenterLinks NAME="ChangedOprWorkCenterLinks" TYPE="Unknown" STATUS="0">
+</ChangedOprWorkCenterLinks>
+<UnchangedOprWorkCenterLinks NAME="UnchangedOprWorkCenterLinks" TYPE="Unknown" STATUS="0">
+</UnchangedOprWorkCenterLinks>
+<DeletedOprBomAllocatedParts NAME="DeletedOprBomAllocatedParts" TYPE="Unknown" STATUS="0">
+</DeletedOprBomAllocatedParts>
+<AddedOprBomAllocatedParts NAME="AddedOprBomAllocatedParts" TYPE="Unknown" STATUS="0">
+</AddedOprBomAllocatedParts>
+<ChangedOprBomAllocatedParts NAME="ChangedOprBomAllocatedParts" TYPE="Unknown" STATUS="0">
+</ChangedOprBomAllocatedParts>
+<UnchangedOprBomAllocatedParts NAME="UnchangedOprBomAllocatedParts" TYPE="Unknown" STATUS="0">
+</UnchangedOprBomAllocatedParts>
+<DeletedOprOperatedOnParts NAME="DeletedOprOperatedOnParts" TYPE="Unknown" STATUS="0">
+</DeletedOprOperatedOnParts>
+<AddedOprOperatedOnParts NAME="AddedOprOperatedOnParts" TYPE="Unknown" STATUS="0">
+</AddedOprOperatedOnParts>
+<ChangedOprOperatedOnParts NAME="ChangedOprOperatedOnParts" TYPE="Unknown" STATUS="0">
+</ChangedOprOperatedOnParts>
+<UnchangedOprOperatedOnParts NAME="UnchangedOprOperatedOnParts" TYPE="Unknown" STATUS="0">
+</UnchangedOprOperatedOnParts>
+<DeletedStandardProcedureLinks NAME="DeletedStandardProcedureLinks" TYPE="Unknown" STATUS="0">
+</DeletedStandardProcedureLinks>
+<AddedStandardProcedureLinks NAME="AddedStandardProcedureLinks" TYPE="Unknown" STATUS="0">
+</AddedStandardProcedureLinks>
+<ChangedStandardProcedureLinks NAME="ChangedStandardProcedureLinks" TYPE="Unknown" STATUS="0">
+</ChangedStandardProcedureLinks>
+<UnchangedStandardProcedureLinks NAME="UnchangedStandardProcedureLinks" TYPE="Unknown" STATUS="0">
+</UnchangedStandardProcedureLinks>
+<DeletedSkills NAME="DeletedSkills" TYPE="Unknown" STATUS="0">
+</DeletedSkills>
+<AddedSkills NAME="AddedSkills" TYPE="Unknown" STATUS="0">
+</AddedSkills>
+<ChangedSkills NAME="ChangedSkills" TYPE="Unknown" STATUS="0">
+</ChangedSkills>
+<UnchangedSkills NAME="UnchangedSkills" TYPE="Unknown" STATUS="0">
+</UnchangedSkills>
+<CurrentAUMs NAME="CurrentAUMs" TYPE="Unknown" STATUS="0">
+</CurrentAUMs>
+<AddedEPMRepresentations NAME="AddedEPMRepresentations" TYPE="Unknown" STATUS="0">
+</AddedEPMRepresentations>
+<DeletedControlCharacteristics NAME="DeletedControlCharacteristics" TYPE="Unknown" STATUS="0">
+</DeletedControlCharacteristics>
+<AddedControlCharacteristics NAME="AddedControlCharacteristics" TYPE="Unknown" STATUS="0">
+</AddedControlCharacteristics>
+<ChangedControlCharacteristics NAME="ChangedControlCharacteristics" TYPE="Unknown" STATUS="0">
+</ChangedControlCharacteristics>
+<UnchangedControlCharacteristics NAME="UnchangedControlCharacteristics" TYPE="Unknown" STATUS="0">
+</UnchangedControlCharacteristics>
+<ModelItems NAME="ModelItems" TYPE="Unknown" STATUS="0">
+</ModelItems>
+<DeletedQualityLinks NAME="DeletedQualityLinks" TYPE="Unknown" STATUS="0">
+</DeletedQualityLinks>
+<AddedQualityLinks NAME="AddedQualityLinks" TYPE="Unknown" STATUS="0">
+</AddedQualityLinks>
+<ChangedQualityLinks NAME="ChangedQualityLinks" TYPE="Unknown" STATUS="0">
+</ChangedQualityLinks>
+<UnchangedQualityLinks NAME="UnchangedQualityLinks" TYPE="Unknown" STATUS="0">
+</UnchangedQualityLinks>
+</COLLECTION>

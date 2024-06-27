@@ -1,8 +1,12 @@
 // src/generateJSON.js
+
 const fs = require('fs');
 const path = require('path');
+const { logError, logInfo } = require('./utils/logger');
 const { parsePrimaryObjectID } = require('./parsePrimaryObjectID');
 const { findTag, parsePartTag } = require('./tags/part');
+const { parseItemPlanningGroupTag } = require('./tags/transformItemPlanningGroup');
+const { parseItemInventoryGroupTag } = require('./tags/transformItemInventoryGroup');
 
 const defaultNumber = "00000";
 
@@ -10,10 +14,10 @@ const getValueOrDefault = (data, defaultValue = defaultNumber) => {
     return data !== undefined && data !== "" ? data : defaultValue;
 };
 
-const generateJSON = (data, templatePath, outputPath, mapping) => {
+const generateJSON = (data, templatePath, outputDir, mapping) => {
     fs.readFile(templatePath, (err, templateData) => {
         if (err) {
-            console.error('Failed to read template file:', err);
+            logError('Failed to read template file:', err);
             return;
         }
 
@@ -22,6 +26,8 @@ const generateJSON = (data, templatePath, outputPath, mapping) => {
 
             const root = data.COLLECTION || {};
             const partData = parsePartTag(root, mapping);
+            const itemPlanningGroupData = parseItemPlanningGroupTag(root);
+            const itemInventoryGroupData = parseItemInventoryGroupTag(root);
             const primaryObjectID = findTag(root, 'PrimaryObjectID');
             const transactionNumber = findTag(root, 'TransactionNumber');
 
@@ -34,6 +40,9 @@ const generateJSON = (data, templatePath, outputPath, mapping) => {
             itemTemplate.itemtype = partData.itemtype;
             itemTemplate.status = partData.status;
 
+            itemTemplate.itemplanninggroup = itemPlanningGroupData;
+            itemTemplate.iteminventorygroup = itemInventoryGroupData;
+
             const taskId = getValueOrDefault(transactionNumber);
             template.taskId = taskId;
 
@@ -41,17 +50,17 @@ const generateJSON = (data, templatePath, outputPath, mapping) => {
 
             const paddedTaskId = taskId.padStart(10, '0');
             const outputFileName = `${paddedTaskId}_Item.json`;
-            const outputFilePath = path.join(path.dirname(outputPath), outputFileName);
+            const outputFilePath = path.join(outputDir, outputFileName);
 
             fs.writeFile(outputFilePath, jsonData, (err) => {
                 if (err) {
-                    console.error('Failed to save JSON file:', err);
+                    logError('Failed to save JSON file:', err);
                     return;
                 }
-                console.log(`JSON file has been saved as ${outputFileName}`);
+                logInfo(`JSON file has been saved as ${outputFileName}`);
             });
         } catch (err) {
-            console.error('Error generating JSON:', err);
+            logError('Error generating JSON:', err);
         }
     });
 };

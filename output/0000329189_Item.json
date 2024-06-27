@@ -1,0 +1,44 @@
+{
+  "action": "UPDATE",
+  "objectName": "Item",
+  "taskId": "329189",
+  "data": [
+    {
+      "id": "00000",
+      "code": "00000",
+      "name": "Т9698-5542/1",
+      "description": "Крышка",
+      "um": {
+        "id": 78068,
+        "key": 78068,
+        "objectName": "UnitMeasure"
+      },
+      "itemplanninggroup": {
+        "id": 106614,
+        "key": 106614,
+        "objectName": "ItemPlanningGroup"
+      },
+      "iteminventorygroup": {
+        "id": 106630,
+        "key": 106630,
+        "objectName": "ItemInventoryGroup"
+      },
+      "itemtype": {
+        "id": 77093,
+        "key": 77093,
+        "objectName": "ItemType"
+      },
+      "status": {
+        "id": 77799,
+        "key": 77799,
+        "objectName": "Status"
+      },
+      "defineOfSetupYield": "00000",
+      "defineOfTestYield": "00000",
+      "isSaleItem": false,
+      "obsoleted": true,
+      "forForecast": false,
+      "key": "00000"
+    }
+  ]
+}

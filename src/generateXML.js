@@ -1,8 +1,11 @@
 // src/generateXML.js
+
 const fs = require('fs');
 const xml2js = require('xml2js');
 const path = require('path');
-const { parsePrimaryObjectID } = require('./parsePrimaryObjectID');
+const { logError, logInfo } = require('./utils/logger');
+
+// Импорт необходимых функций
 const { findTag, parsePartTag } = require('./tags/part');
 const { parseItemPlanningGroupTag } = require('./tags/transformItemPlanningGroup');
 const { parseItemInventoryGroupTag } = require('./tags/transformItemInventoryGroup');
@@ -14,23 +17,30 @@ const getValueOrDefault = (data, defaultValue = defaultNumber) => {
 };
 
 const generateXML = (data, templatePath, outputPath) => {
+    if (!fs.existsSync(templatePath)) {
+        logError(`Template file not found: ${templatePath}`);
+        return;
+    }
+
     fs.readFile(templatePath, (err, templateData) => {
         if (err) {
-            console.error('Failed to read template file:', err);
+            logError(`Failed to read template file: ${err}`);
             return;
         }
 
         xml2js.parseString(templateData, (err, template) => {
             if (err) {
-                console.error('Failed to parse template XML:', err);
+                logError(`Failed to parse template XML: ${err}`);
                 return;
             }
 
             try {
+                logInfo(`Template data: ${JSON.stringify(template)}`);
+
                 const root = data.root || data.COLLECTION || {};
                 const partData = parsePartTag(root);
-                const itemPlanningGroupData = parseItemPlanningGroupTag(root); // Передаем root
-                const itemInventoryGroupData = parseItemInventoryGroupTag(root); // Передаем root
+                const itemPlanningGroupData = parseItemPlanningGroupTag(root);
+                const itemInventoryGroupData = parseItemInventoryGroupTag(root);
                 const primaryObjectID = findTag(root, 'PrimaryObjectID');
                 const transactionNumber = findTag(root, 'TransactionNumber');
 
@@ -58,13 +68,13 @@ const generateXML = (data, templatePath, outputPath) => {
 
                 fs.writeFile(outputFilePath, xml, (err) => {
                     if (err) {
-                        console.error('Failed to save XML file:', err);
+                        logError(`Failed to save XML file: ${err}`);
                         return;
                     }
-                    console.log(`XML file has been saved as ${outputFileName}`);
+                    logInfo(`XML file has been saved as ${outputFileName}`);
                 });
             } catch (err) {
-                console.error('Error generating XML:', err);
+                logError(`Error generating XML: ${err}`);
             }
         });
     });

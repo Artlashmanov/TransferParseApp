@@ -1,62 +1,63 @@
+// src/connector/consumer.js
+
 const amqp = require('amqplib/callback_api');
-const parseXML = require('../parseXML');
-const generateXML = require('../generateXML');
 const fs = require('fs');
 const path = require('path');
-
-const sendProcessedXMLFile = require('./sendProcessedXMLFile'); // Импорт функции отправки обработанных файлов
-
-const processFile = async (filePath) => {
-    try {
-        const xmlData = fs.readFileSync(filePath, 'utf8');
-        const data = await parseXML(xmlData);
-
-        const outputFileName = `${path.basename(filePath, '.xml')}_processed.xml`;
-        const outputFilePath = path.join(__dirname, '../../output', outputFileName); // Убедитесь, что путь ведет к корню проекта
-        await generateXML(data, outputFilePath);
-
-        // Отправка готового файла в очередь processed_xml_files
-        sendProcessedXMLFile(outputFilePath);
-
-        console.log(" [x] Processed and sent %s", outputFilePath);
-    } catch (err) {
-        console.error(err);
-    }
-};
+const { processFileAsXML } = require('../handlers/xmlHandler');
+const { processFileAsJSONWithTemplate } = require('../handlers/jsonHandler');
+const { rabbitMQ, appMetadata } = require('../../config');
 
 const startConsumer = () => {
-    amqp.connect('amqp://localhost', (err, conn) => {
-        if (err) {
-            throw err;
+  amqp.connect(rabbitMQ.url, (err, conn) => {
+    if (err) {
+      console.error(`[ERROR] Failed to connect to RabbitMQ: ${err.message}`);
+      throw err;
+    }
+    console.log(`[INFO] Connected to RabbitMQ at ${rabbitMQ.url}`);
+    conn.createChannel((err, ch) => {
+      if (err) {
+        console.error(`[ERROR] Failed to create RabbitMQ channel: ${err.message}`);
+        throw err;
+      }
+      const queue = appMetadata.rawQueue;
+
+      ch.assertQueue(queue, { durable: true });
+      console.log(`[INFO] Asserted queue ${queue}`);
+
+      ch.consume(queue, async (msg) => {
+        if (msg !== null) {
+          console.log(`[INFO] Message received from queue ${queue}`);
+          const xmlData = msg.content.toString();
+          const tempXMLDir = path.join(__dirname, '../../inputXML');
+          const tempJSONDir = path.join(__dirname, '../../inputJSON');
+          const tempXMLFilePath = path.join(tempXMLDir, 'temp.xml');
+          const tempJSONFilePath = path.join(tempJSONDir, 'temp.xml');
+
+          if (!fs.existsSync(tempXMLDir)) {
+            fs.mkdirSync(tempXMLDir, { recursive: true });
+          }
+
+          if (!fs.existsSync(tempJSONDir)) {
+            fs.mkdirSync(tempJSONDir, { recursive: true });
+          }
+
+          fs.writeFileSync(tempXMLFilePath, xmlData);
+          fs.writeFileSync(tempJSONFilePath, xmlData);
+          console.log(`[INFO] Message saved to ${tempXMLFilePath} and ${tempJSONFilePath}`);
+
+          // Процесс обработки файла
+          await processFileAsXML(tempXMLFilePath);
+          await processFileAsJSONWithTemplate(tempJSONFilePath);
+
+          ch.ack(msg);
+        } else {
+          console.log(`[WARNING] Received null message`);
         }
-        conn.createChannel((err, ch) => {
-            if (err) {
-                throw err;
-            }
-            const queue = 'raw_xml_files';
+      }, { noAck: false });
 
-            ch.assertQueue(queue, { durable: true });
-
-            ch.consume(queue, async (msg) => {
-                if (msg !== null) {
-                    const xmlData = msg.content.toString();
-                    const tempDir = path.join(__dirname, '../../inputXML'); // Убедитесь, что путь ведет к корню проекта
-                    const tempFilePath = path.join(tempDir, 'temp.xml');
-
-                    // Проверка существования директории inputXML и создание, если она не существует
-                    if (!fs.existsSync(tempDir)) {
-                        fs.mkdirSync(tempDir, { recursive: true });
-                    }
-
-                    fs.writeFileSync(tempFilePath, xmlData);
-
-                    await processFile(tempFilePath);
-
-                    ch.ack(msg);
-                }
-            }, { noAck: false });
-        });
+      console.log(`[INFO] Waiting for messages in ${queue}`);
     });
+  });
 };
 
 module.exports = startConsumer;

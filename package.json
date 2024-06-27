@@ -4,10 +4,12 @@
   "main": "src/index.js",
   "bin": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "send-files": "node src/connector/sendFiles.js"
   },
   "dependencies": {
     "amqplib": "^0.10.4",
+    "axios": "^1.7.2",
     "chokidar": "^3.5.1",
     "xml2js": "^0.4.23"
   },

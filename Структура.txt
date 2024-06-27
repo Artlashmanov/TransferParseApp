@@ -1,0 +1,52 @@
+TransferParseApp/
+├── inputXML/
+├── inputJSON/
+├── output/
+├── src/
+│   ├── connector/
+│   │   ├── consumer.js
+│   │   ├── producer.js
+│   │   └── sendProcessedXMLFile.js
+│   ├── handlers/
+│   │   ├── fileHandler.js
+│   │   ├── xmlHandler.js (не загружен)
+│   │   ├── jsonHandler.js
+│   ├── tags/
+│   │   ├── part.js
+│   │   └── transformItemPlanningGroup.js (не загружен)
+│   │   └── transformItemInventoryGroup.js (не загружен)
+│   ├── utils/
+│   │   ├── logger.js
+│   │   └── directoryHelper.js
+│   ├── index.js
+│   ├── parsePrimaryObjectID.js
+│   ├── parseXML.js
+│   ├── generateJSON.js
+│   ├── generateXML.js
+├── templates/
+│   ├── templateXML.xml (не загружен)
+│   ├── templateJSON.json (не загружен)
+├── mapping.json
+├── mappingTable.json
+├── config.js
+├── package.json
+├── package-lock.json
+
+
+
+inputXML/, inputJSON/, output/ — каталоги для входных и выходных файлов.
+
+src/ — основной каталог с исходным кодом:
+
+connector/ — файлы для работы с RabbitMQ (потребитель, производитель, отправка обработанных XML файлов).
+handlers/ — обработчики файлов (для XML и JSON).
+tags/ — функции для обработки и трансформации тегов XML файлов.
+utils/ — утилиты, такие как логирование и помощник для работы с директориями.
+Основные файлы проекта: index.js, parsePrimaryObjectID.js, parseXML.js, generateJSON.js, generateXML.js.
+templates/ — шаблоны для XML и JSON файлов.
+
+mapping.json, mappingTable.json — файлы для отображения и сопоставления данных.
+
+config.js — конфигурационный файл для RabbitMQ и метаданных приложения.
+
+package.json, package-lock.json — файлы для управления зависимостями npm.
